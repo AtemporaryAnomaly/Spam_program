@@ -7,6 +7,51 @@ from tkinter import ttk
 from tkinter import filedialog
 from os import path, listdir
 
+class Bruteforce:
+    def time_message(self):  #Изменение времени задержки
+        intell = self.TimeEntry.get()
+        self.delay = int(intell)
+    def start(self):
+        with open(self.filepath, 'r', encoding='UTF-8') as file:
+            while line := file.readline():
+                keyboard.write(line.rstrip())
+                keyboard.send("enter")
+                sleep(self.delay)
+    def keyB(self):  #Изменение ключа
+        self.key = keyboard.read_key()
+        self.label2["text"] = self.key
+        keyboard.add_hotkey(self.key, lambda: self.start())
+    def open_file(self):
+        self.filepath = filedialog.askopenfilename()
+        if self.filepath != "":
+            with open(self.filepath, "r") as file:
+                text = file.read()
+                lines = [line.rstrip() for line in file]
+                self.text_editor.delete("1.0", END)
+                self.text_editor.insert("1.0", text)
+
+    def __init__(self):
+        rt = Toplevel()
+        rt.geometry("500x500")
+        self.text_editor = Text(rt)
+        self.text_editor.pack()
+
+        self.open_button = ttk.Button(rt,text="Открыть файл", command=self.open_file)
+        self.label = ttk.Label(rt, text="горячая Клавиша")  # создаем текстовую метку
+        self.label2 = ttk.Label(rt, text="Клавиша не задана")
+        self.btn3 = ttk.Button(rt, text="Изменить клавишу", command=self.keyB, )
+        self.TimeEntry = ttk.Entry(rt, style="My.TLabel")
+        self.TimeEntry.insert(0, "")
+
+        self.open_button.pack()
+        self.label.pack()
+        self.label2.pack()
+        self.btn3.pack(anchor=NW, padx=6, pady=6)
+        self.TimeEntry.pack(anchor=NW, padx=6, pady=6)
+        self.btn3 = ttk.Button(rt, text="Введите задержку и нажмите сюда", command=self.time_message, )
+        self.btn3.pack(anchor=NW, padx=6, pady=6)
+
+
 
 class setting:
 
@@ -31,7 +76,7 @@ class setting:
     def __init__(self):
         rt = Toplevel()
 
-        rt.geometry("200x200")
+        rt.geometry("500x500")
 
         global enabled, new_key
 
@@ -45,11 +90,10 @@ class setting:
         self.lb1 = ttk.Label(rt, text="Дополнительная клавиша\nдля открытия чата в играх")
         self.lb2 = ttk.Label(rt, text="y")
 
-        new_key = "y"
-
         self.enabled_checkbutton.pack(padx=6, pady=6, anchor=NW)
         self.lb1.pack()
         self.lb2.pack()
+
 
     @staticmethod
     def get_enabled():
@@ -59,14 +103,12 @@ class setting:
     def get_new_key():
         return new_key
 
-
 class main:
 
     #ФУНКЦИИ
     def start(self, age, word, timeS):  #Запуск основной функции приложения
         global running
 
-        """РЕШИТЬ ПРОБЛЕМУ С ВВОДОМ ДОПОЛЬНИТЕЛЬНОЙ КЛАВИШИ"""
         running = True
 
         for i in range(age):
@@ -145,8 +187,8 @@ class main:
         self.file_menu = Menu(root)
         self.settings_menu = Menu(root)
 
-        self.settings_menu.add_command(label="Add_command", command=setting)
-
+        self.settings_menu.add_command(label="additionally_the_game", command=setting)
+        self.settings_menu.add_command(label="additionally_bruteforce", command=Bruteforce)
         self.file_menu.add_command(label="Открыть", command=self.file_open)
 
         self.main_menu.add_cascade(label='Настройки', menu=self.settings_menu)
