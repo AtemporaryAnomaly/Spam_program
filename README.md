@@ -1,3 +1,6 @@
+**The program was made for entertainment and educational purposes (by a beginner) and the author does not take responsibility for how it will be used**
+
+
 **To test the program**, you must have a windows operating system (tested on it) and go to Project/Alpha/*.exe. 
 
 Download the Alpha folder and run *.exe in it so that all the components are together.(**The entire interface is made in Russian**)
