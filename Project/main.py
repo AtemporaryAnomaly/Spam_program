@@ -6,6 +6,10 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 from os import path, listdir
+# Importing urllib request module in the program
+import webbrowser
+
+
 
 class Bruteforce:
     def time_message(self):  #Изменение времени задержки
@@ -104,7 +108,6 @@ class setting:
         return new_key
 
 class main:
-
     #ФУНКЦИИ
     def start(self, age, word, timeS):  #Запуск основной функции приложения
         global running
@@ -154,8 +157,7 @@ class main:
         self.timeS = int(intell)
 
     def help(self):  #объяснение функции программы
-        pass
-
+        webbrowser.open_new_tab('https://github.com/AtemporaryAnomaly/Spam_program/blob/main/README.md')
     def stopFunction(self):  #Остановка проги
         self.running = False
 
@@ -193,7 +195,7 @@ class main:
 
         self.main_menu.add_cascade(label='Настройки', menu=self.settings_menu)
         self.main_menu.add_cascade(label='Файл', menu=self.file_menu)
-        self.main_menu.add_cascade(label='Помощь')
+        self.main_menu.add_cascade(label='Помощь', command=self.help)
         self.main_menu.add_cascade(label="Выход", command=exit)
 
         root.config(menu=self.main_menu)
